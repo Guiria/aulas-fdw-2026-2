@@ -1,0 +1,114 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Cadastro de Funcionários</title>
+</head>
+
+<div class="cadastro">
+    <h1>Cadastro de Funcionários</h1>
+
+    <form>
+
+        <div class="linha">
+            <label>Nome:</label>
+            <input type="text" name="nome">
+        </div>
+
+        <div class="linha">
+            <label>Endereço:</label>
+            <input type="text" name="endereco">
+
+            <label class="label-menor">Número:</label>
+            <input type="text" name="numero" class="campo-menor">
+        </div>
+
+        <div class="linha">
+            <label>Complemento:</label>
+            <input type="text" name="complemento">
+
+            <label class="label-menor">Celular:</label>
+            <input type="text" name="celular" class="campo-menor">
+        </div>
+
+        <div class="linha">
+            <label>Bairro:</label>
+            <input type="text" name="bairro">
+
+            <label class="label-menor">CEP:</label>
+            <input type="text" name="cep" class="campo-menor">
+        </div>
+
+        <div class="linha">
+            <label>Cidade:</label>
+            <input type="text" name="cidade">
+
+            <label class="label-menor">UF:</label>
+            <select name="uf" class="campo-uf">
+                <option value="AC">AC</option>
+				<option value="AL">AL</option>
+				<option value="AP">AP</option>
+				<option value="AM">AM</option>
+				<option value="BA">BA</option>
+				<option value="CE">CE</option>
+				<option value="DF">DF</option>
+				<option value="ES">ES</option>
+				<option value="GO">GO</option>
+				<option value="MA">MA</option>
+				<option value="MT">MT</option>
+				<option value="MS">MS</option>
+				<option value="MG">MG</option>
+				<option value="PA">PA</option>
+				<option value="PB">PB</option>
+				<option value="PR">PR</option>
+				<option value="PE">PE</option>
+				<option value="PI">PI</option>
+				<option value="RJ">RJ</option>
+				<option value="RN">RN</option>
+				<option value="RS">RS</option>
+				<option value="RO">RO</option>
+				<option value="RR">RR</option>
+				<option value="SC">SC</option>
+				<option value="SP">SP</option>
+				<option value="SE">SE</option>
+				<option value="TO">TO</option>
+            </select>
+        </div>
+
+        <div class="linha">
+            <label>Email:</label>
+            <input type="email" name="email">
+
+            <label class="label-menor">Cargo:</label>
+            <select name="cargo" class="campo-menor">
+                <option>Selecione</option>
+				<option value="Programador">Programador</option>
+				<option value="Diretor">Diretor</option>
+				<option value="Coordenador">Coordenador</option>
+				<option value="Analista">Analista</option>
+            </select>
+        </div>
+
+        <div class="linha">
+            <label>Usuário:</label>
+            <input type="text" name="usuario">
+
+            <label class="label-menor">Senha:</label>
+            <input type="password" name="senha" class="campo-menor">
+        </div>
+
+        <div class="linha final">
+            <label>Departamento:</label>
+
+            <select name="departamento">
+                <option>Selecione Departamento</option>
+                <option>Administrativo</option>
+                <option>Financeiro</option>
+                <option>Recursos Humanos</option>
+                <option>TI</option>
+            </select>
+
+            <button type="submit">Enviar</button>
+        </div>
+
+    </form>
+</div>
