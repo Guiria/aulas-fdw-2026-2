@@ -43,9 +43,7 @@ a {
     text-align: center;
 }
 
-input, select, textarea {
-    border: 2px inset;
-}
+
 
 .dica {
     color: #777777;
