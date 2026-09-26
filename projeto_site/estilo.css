@@ -1,55 +1,56 @@
 body {
-    background-color: #000033;
-    color: #ffffff;
+    background-color: #f4f4f9;
+    color: #333333;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 a {
-    color: #ffff00;
+    color: #ff6600;
     text-decoration: none;
     font-weight: bold;
 }
 
 a:hover {
-    color: #ff0000;
+    color: #cc5200;
     text-decoration: underline;
 }
 
 .tabela-dados {
-    background-color: #000066;
-    border: 2px solid #ffff00;
+    background-color: #ffffff;
+    border: 2px solid #ff6600;
     width: 80%;
 }
 
 .tabela-dados th {
-    background-color: #ff0000;
+    background-color: #ff6600;
     color: #ffffff;
 }
 
 .tabela-dados td {
-    background-color: #000099;
+    background-color: #fef0e6;
+    color: #333333;
 }
 
 .tabela-form {
-    background-color: #000066;
-    border: 2px solid #00ffff;
+    background-color: #ffffff;
+    border: 2px solid #333333;
     width: 90%;
 }
 
 .form-header {
-    background-color: #00ffff;
-    color: #000000;
+    background-color: #333333;
+    color: #ffffff;
     font-weight: bold;
     text-align: center;
 }
 
 input, select {
-    background-color: #000000;
-    color: #00ffff;
-    border: 1px solid #00ffff;
+    background-color: #ffffff;
+    color: #333333;
+    border: 1px solid #ff6600;
 }
 
 .dica {
-    color: #aaaaaa;
+    color: #777777;
     font-size: 14px;
 }
