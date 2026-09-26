@@ -13,11 +13,6 @@ a {
     font-weight: bold;
 }
 
-a:hover {
-    color: #ffffff;
-    text-decoration: underline;
-}
-
 .tabela-dados {
     background-color: #ffffff;
     border: 2px solid #ff6600;
@@ -48,7 +43,9 @@ a:hover {
     text-align: center;
 }
 
-
+input, select, textarea {
+    border: 2px inset;
+}
 
 .dica {
     color: #777777;
