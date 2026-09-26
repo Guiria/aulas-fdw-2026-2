@@ -1,0 +1,83 @@
+body {
+    background-color: #1e1e24;
+    color: #f5f6fa;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+/* CSS nos links */
+a {
+    color: #00a8ff;
+    text-decoration: none;
+    font-weight: bold;
+}
+a:hover {
+    color: #0097e6;
+    text-decoration: underline;
+}
+
+/* CSS nas tabelas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #2f3640;
+}
+table, th, td {
+    border: 1px solid #718093;
+}
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+th {
+    background-color: #353b48;
+    color: #e1b12c;
+}
+
+/* CSS nos formulários e campos coloridos */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    background-color: #f5f6fa;
+    color: #2f3640;
+    border: 1px solid #7f8fa6;
+    border-radius: 4px;
+}
+input[type="submit"],
+input[type="button"] {
+    background-color: #4cd137;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+input[type="submit"]:hover,
+input[type="button"]:hover {
+    background-color: #44bd32;
+}
+
+/* Ranking (tabela com backgrounds formatados) */
+.ranking-table tr:nth-child(even) {
+    background-color: #353b48;
+}
+.ranking-table tr:nth-child(odd) {
+    background-color: #2f3640;
+}
+
+/* Formulario layout (cadastro e login) */
+.form-table th {
+    background-color: #4cd137;
+    color: #1e1e24;
+    text-align: center;
+}
+.form-table td {
+    background-color: #353b48;
+}
