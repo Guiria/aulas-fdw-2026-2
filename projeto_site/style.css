@@ -6,6 +6,8 @@ body {
     padding: 20px;
 }
 
+
+
 /* CSS nos links */
 a {
     color: #00a8ff;
@@ -24,6 +26,7 @@ table {
     margin-bottom: 20px;
     background-color: #2f3640;
 }
+
 table, th, td {
     border: 1px solid #718093;
 }

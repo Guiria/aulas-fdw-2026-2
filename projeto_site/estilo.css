@@ -3,18 +3,18 @@ body {
     background-image: url("wallpaperflare.com_wallpaper.jpg");
     background-size: cover;
     background-attachment: fixed;
-    color: #333333;
+    color: #ffffff;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 a {
-    color: #ff6600;
+    color: #ffb81c;
     text-decoration: none;
     font-weight: bold;
 }
 
 a:hover {
-    color: #cc5200;
+    color: #ffffff;
     text-decoration: underline;
 }
 
@@ -37,6 +37,7 @@ a:hover {
 .tabela-form {
     background-color: #ffffff;
     border: 2px solid #333333;
+    color: #333333;
     width: 90%;
 }
 
@@ -50,7 +51,6 @@ a:hover {
 input, select {
     background-color: #ffffff;
     color: #333333;
-    border: 1px solid #ff6600;
 }
 
 .dica {
