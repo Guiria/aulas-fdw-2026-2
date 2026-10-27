@@ -1,67 +1,117 @@
-<html><head><title>Meu Site</title>
-<meta http-equiv="Cache-Control" content="No-Cache">
-</head><body>
 <?php
-function processa_formulário(){
-   if ($_GET["nome"]==""){
-      echo "Nome incorreto";
-      echo "<a href='javascript:history.back()'>Voltar</a>";
-      exit;
-   }
-   if ($_GET["endereco"]==""){
-      echo "Endereco incorreto";
-      echo "<a href='javascript:history.back()'>Voltar</a>";
-      exit;
-   }
-   
-   //Repita para os outros campos
-      if ($_GET["nome"]!=""){
-		  if ((strrpos($_GET["nome"],"drop")>0)|| 
-		      (strrpos($_GET["nome"],"update")>0)||
-			  (strrpos($_GET["nome"],"insert")>0)||
-			  (strrpos($_GET["nome"],"delete")>0)||
-			  (strrpos($_GET["nome"],"select")>0)||
-			  (strrpos($_GET["nome"],"drop")>0)
-			  ){
-				echo "Nome Invalido";
-				echo "<a href='javascript:history.back()'>Voltar</a>";
-				exit;
-	  }
-   }
+// Dados de conexao com o banco
+$host     = getenv("DB_HOST") ?: "localhost";
+$username = "root";
+$password = "";
+$db_name  = "empresa";
+
+function pagina($titulo, $mensagem, $voltar = true) {
+    echo "<html><head><meta charset='UTF-8'><title>Meu Site</title>";
+    echo "<link rel='stylesheet' type='text/css' href='estilo.css'></head><body>";
+    echo "<h2>" . htmlspecialchars($titulo) . "</h2><p>" . $mensagem . "</p>";
+    if ($voltar) {
+        echo "<a href='javascript:history.back()'>Voltar</a>";
+    }
+    echo "</body></html>";
+    exit;
 }
- if ((isset($_GET["nome"]))&&(isset($_GET["email"]))){ 
-     processa_formulário();
- }
 
-?> 
+function processa_formulario() {
+    // Campos obrigatorios
+    $obrigatorios = array(
+        "nome" => "Nome", "endereco" => "Endereco", "numero" => "Numero",
+        "bairro" => "Bairro", "cidade" => "Cidade", "cep" => "CEP", "uf" => "UF",
+        "email" => "Email", "cargo" => "Cargo", "departamento" => "Departamento",
+        "usuario" => "Usuario", "senha" => "Senha"
+    );
+    foreach ($obrigatorios as $campo => $rotulo) {
+        if (!isset($_POST[$campo]) || trim($_POST[$campo]) == "") {
+            pagina("Erro no cadastro", $rotulo . " incorreto");
+        }
+    }
 
+    // Campos de texto sem caracteres especiais
+    $textos = array("nome" => "Nome", "endereco" => "Endereco", "complemento" => "Complemento",
+                    "bairro" => "Bairro", "cidade" => "Cidade");
+    foreach ($textos as $campo => $rotulo) {
+        $valor = isset($_POST[$campo]) ? trim($_POST[$campo]) : "";
+        if ($valor != "" && !preg_match("/^[\p{L}0-9 .,\-ºª]+$/u", $valor)) {
+            pagina("Erro no cadastro", $rotulo . " invalido");
+        }
+    }
 
-<?php 
-//$_GET vai capturar o usuario e senha digitados no formulario html para usar na query insert 
-$nome    	=$_GET["nome"];
-$endereco	=$_GET["endereco"];
-//....repita .......... para todosos campos complemento, bairro, cep, cidade, bairro, uf, email, usuario e senha
-//....
-//OBSERVE que o id não deve ser preenchido pois ele é acrescentado automaticamente. Complete com as variáveis que faltam
-$sql="insert into `jogadores`
-(`nome`, `endereco`, `numero`, `complemento`, `bairro`, `cidade`,         `cep`,     `uf`,     `email`, `usuario`, `senha`) 
-VALUES ('".$nome."','".$endereco."','','','','','','','','','')"; //complete a query com as variáveis do formulário
+    // Processamento anti-SQL Injection
+    $proibidas = array("drop", "update", "insert", "delete", "select", "union", "--", ";");
+    foreach ($_POST as $valor) {
+        foreach ($proibidas as $palavra) {
+            if (stripos($valor, $palavra) !== false) {
+                pagina("Erro no cadastro", "Conteudo invalido informado");
+            }
+        }
+    }
 
-$host    ="localhost"; //Endereco do Servidor MySQL
-$username="root";      //Usuario administrador do MySQL
-$password="";          //Senha administrador do MySQL 
-$db_name ="empresa"; //nome da base de dados MySQL
-$con=mysqli_connect("$host", "$username", "$password", "$db_name") or die("cannot connect");  //Cria conexao banco de dados
-if (mysqli_connect_errno()) {                          //testa se a conexao foi estabelecida corretamente
-        echo "Falhou ao conectar ao MySQL: " . mysqli_connect_error();
-        exit();
+    if (!preg_match("/^[0-9]{8}$/", $_POST["cep"])) {
+        pagina("Erro no cadastro", "CEP invalido (informe 8 numeros)");
+    }
+    $ufs = array("AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG","PA","PB",
+                 "PR","PE","PI","RJ","RN","RS","RO","RR","SC","SP","SE","TO");
+    if (!in_array($_POST["uf"], $ufs, true)) {
+        pagina("Erro no cadastro", "UF invalida");
+    }
+    if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+        pagina("Erro no cadastro", "Email invalido");
+    }
+    if (strlen($_POST["usuario"]) > 8 || strlen($_POST["senha"]) > 8) {
+        pagina("Erro no cadastro", "Usuario e senha aceitam no maximo 8 caracteres");
+    }
+    if ($_POST["cargo"] == "Selecione" || $_POST["departamento"] == "Selecione Departamento") {
+        pagina("Erro no cadastro", "Selecione o cargo e o departamento");
+    }
 }
-$result = mysqli_query($con,$sql);    //Roda a query na tabela cadastro usando a conexao e guarda em $result
+
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    pagina("Cadastro", "Acesse o formulario de cadastro para enviar os dados.", false);
+}
+
+processa_formulario();
+
+// Captura os dados digitados no formulario
+$nome         = trim($_POST["nome"]);
+$endereco     = trim($_POST["endereco"]);
+$numero       = trim($_POST["numero"]);
+$complemento  = isset($_POST["complemento"]) ? trim($_POST["complemento"]) : "";
+$bairro       = trim($_POST["bairro"]);
+$cidade       = trim($_POST["cidade"]);
+$cep          = $_POST["cep"];
+$uf           = $_POST["uf"];
+$email        = trim($_POST["email"]);
+$cargo        = $_POST["cargo"];
+$departamento = $_POST["departamento"];
+$usuario      = $_POST["usuario"];
+$senha        = $_POST["senha"];
+
+// O id nao e preenchido pois e acrescentado automaticamente
+$sql = "INSERT INTO `funcionarios`
+        (`nome`, `endereco`, `numero`, `complemento`, `bairro`, `cidade`, `cep`, `uf`, `email`, `cargo`, `departamento`, `usuario`, `senha`)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+mysqli_report(MYSQLI_REPORT_OFF);
+$con = mysqli_connect($host, $username, $password, $db_name);
+if (mysqli_connect_errno()) {
+    pagina("Erro de conexao", "Falhou ao conectar ao MySQL: " . htmlspecialchars(mysqli_connect_error()), false);
+}
+mysqli_set_charset($con, "utf8mb4");
+
+$stmt = mysqli_prepare($con, $sql);
+mysqli_stmt_bind_param($stmt, "sssssssssssss", $nome, $endereco, $numero, $complemento, $bairro,
+                       $cidade, $cep, $uf, $email, $cargo, $departamento, $usuario, $senha);
+$result = mysqli_stmt_execute($stmt);
+
 if (!$result) {
-        die("Erro na inclusao: " . mysqli_error($con));             //se a query sql estiver incorreta vai parar aqui
-}else{
-	mysqli_close($con); //Fecha a conexao com banco de dados  
-	echo "cliente cadastrado com sucesso";
-	exit;               // Encerra PHP
+    $erro = htmlspecialchars(mysqli_stmt_error($stmt));
+    mysqli_close($con);
+    pagina("Erro na inclusao", $erro);
 }
-?></table></body></html>
+mysqli_stmt_close($stmt);
+mysqli_close($con);
+pagina("Cadastro realizado", "Registro incluido com sucesso", false);

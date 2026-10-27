@@ -1,0 +1,29 @@
+# Ambiente de teste (substitui o XAMPP): Apache+PHP, MariaDB e phpMyAdmin.
+# Portas presas ao localhost do servidor; acesse via tunel SSH.
+name: fdw-lab
+services:
+  db:
+    image: mariadb:10.11
+    environment:
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: "yes"   # root sem senha, como no XAMPP
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - dbdata:/var/lib/mysql
+  web:
+    build: ./web
+    depends_on: [db]
+    environment:
+      DB_HOST: db
+    ports: ["127.0.0.1:8280:80"]
+    volumes:
+      - ../projeto_site:/var/www/html/dashboard:ro
+  pma:
+    image: phpmyadmin:5
+    depends_on: [db]
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: ""
+    ports: ["127.0.0.1:8281:80"]
+volumes:
+  dbdata:

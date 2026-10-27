@@ -1,0 +1,18 @@
+CREATE DATABASE IF NOT EXISTS `empresa`;
+
+CREATE TABLE `empresa`.`funcionarios` (
+  `id`           INT(10) NOT NULL AUTO_INCREMENT,
+  `nome`         VARCHAR(30) NULL DEFAULT NULL,
+  `endereco`     VARCHAR(50) NULL DEFAULT NULL,
+  `numero`       VARCHAR(20) NULL DEFAULT NULL,
+  `complemento`  VARCHAR(50) NULL DEFAULT NULL,
+  `bairro`       VARCHAR(30) NULL DEFAULT NULL,
+  `cidade`       VARCHAR(50) NULL DEFAULT NULL,
+  `cep`          VARCHAR(8)  NULL DEFAULT NULL,
+  `uf`           VARCHAR(2)  NULL DEFAULT NULL,
+  `email`        VARCHAR(50) NULL DEFAULT NULL,
+  `cargo`        VARCHAR(50) NULL DEFAULT NULL,
+  `departamento` VARCHAR(50) NULL DEFAULT NULL,
+  `usuario`      VARCHAR(8)  NULL DEFAULT NULL,
+  `senha`        VARCHAR(8)  NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)) ENGINE = InnoDB;
